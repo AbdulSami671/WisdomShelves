@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Your Next Great Read | Author Name</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated gradient background */
+        .hero {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+            to { text-shadow: 0 0 20px rgba(255,255,255,0.8), 2px 2px 4px rgba(0,0,0,0.5); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            box-shadow: 0 8px 25px rgba(255,107,107,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255,107,107,0.4);
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-book {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            border-radius: 4px;
+            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .floating-book::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 5px;
+            right: 5px;
+            height: 3px;
+            background: #DAA520;
+            border-radius: 2px;
+        }
+
+        .floating-book:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-book:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-book:nth-child(3) {
+            top: 35%;
+            left: 80%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(-10px) rotate(-3deg); }
+        }
+
+        .books-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 30px 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .book-cover {
+            width: 245px;
+            height: 305px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .book-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            width: 100%;
+            word-break: break-word;
+            white-space: normal;
+            text-align: center;
+        }
+
+        .book-description {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .book-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        .buy-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .buy-button:hover {
+            background: linear-gradient(135deg, #5a6fd8, #6a4190);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102,126,234,0.3);
+        }
+
+        .cart-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #20c997, #38ada9);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .cart-button:hover {
+            background: linear-gradient(135deg, #17a589, #218c74);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(32,201,151,0.18);
+        }
+
+        .desc-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #6c63ff, #48c6ef);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .desc-button:hover {
+            background: linear-gradient(135deg, #5f5fc4, #36a2c7);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76,97,255,0.18);
+        }
+
+        .about-section {
+            padding: 100px 0;
+            background: #2c3e50;
+            color: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .author-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .testimonials {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: #667eea;
+            font-family: serif;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer h3 {
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .footer a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #667eea;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102,126,234,0.3);
+        }
+
+        .bundle-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ff4747;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 5px 14px;
+            border-radius: 18px 6px 18px 6px;
+            box-shadow: 0 2px 8px rgba(255,71,71,0.12);
+            z-index: 3;
+            letter-spacing: 0.2px;
+            border: 1.5px solid #fffbe6;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.07);
+            white-space: nowrap;
+        }
+
+        .digital-download-badge {
+            display: inline-block;
+            margin: 16px auto 8px auto;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #d35400;
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 16px 5px 16px 5px;
+            box-shadow: 0 2px 8px rgba(252,182,159,0.13);
+            letter-spacing: 0.2px;
+            border: 1.5px solid #fffbe6;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            white-space: nowrap;
+            position: static;
+        }
+
+        .book-card-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .book-card-buttons a {
+            flex: none;
+            min-width: 0;
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .site-header {
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(102,126,234,0.06);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            min-height: 64px;
+        }
+        .header-inner {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .store-name {
+            font-family: 'Poppins', 'Lora', 'Georgia', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #764ba2;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            display: inline-block;
+            margin: 0;
+            padding: 18px 0 14px 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: fadeInStoreName 1.1s cubic-bezier(.77,0,.18,1) 0.2s forwards;
+            transition: letter-spacing 0.25s cubic-bezier(.77,0,.18,1), color 0.2s;
+        }
+        .store-name:hover {
+            letter-spacing: 0.12em;
+            color: #ff6b6b;
+        }
+        @keyframes fadeInStoreName {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 600px) {
+            .header-inner {
+                padding: 0 10px;
+            }
+            .store-name {
+                font-size: 1.3rem;
+                padding: 14px 0 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="Landing page.html" class="store-name">Wisdom Shelves</a>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="floating-elements">
+            <div class="floating-book"></div>
+            <div class="floating-book"></div>
+            <div class="floating-book"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Find Peace, Purpose, and Personal Growth</h1>
+                <p>Discover captivating tales that will transport you to new worlds</p>
+                <a href="#books" class="cta-button">Explore My Books</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="books-section" id="books">
+        <div class="container">
+            <h2 class="section-title">Featured Books</h2>
+            <div class="books-grid">
+                <div class="book-card" style="position:relative;">
+                    <div class="book-cover">
+                        <img src="Mind Architect.png" alt="The Mind Architect Book Cover" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div> 
+                    <span class="digital-download-badge">Digital Download</span>
+                    <h3 class="book-title">The Mind Architect</h3>
+                    <p class="book-description">Discover how to rewire your mindset, take control of your emotions, and unlock the mental clarity needed to thrive in your daily life. This book breaks down the most effective psychological strategies in a simple, practical format.</p>
+                    <div class="book-price">$4.00</div>
+                    <div class="book-card-buttons">
+                        <a href="https://wisdomshelves.gumroad.com/l/lpkvk" class="buy-button gumroad-button" data-gumroad-single data-gumroad-overlay target="_blank">Buy Now</a>
+                        <a href="#" class="cart-button">Add to Cart</a>
+                        <a href="book-description.html" class="desc-button">Book Description</a>
+                    </div>
+                </div>
+                
+                <div class="book-card" style="position:relative;">
+                    <div class="book-cover">
+                        <img src="Healing your inner child.png" alt="Healing Your Inner Child Book Cover" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <span class="digital-download-badge">Digital Download</span>
+                    <h3 class="book-title">Healing Your Inner Child</h3>
+                    <p class="book-description">A compassionate guide to reconnecting with your inner child and healing past wounds. Discover self-love and emotional freedom through gentle, transformative practices.</p>
+                    <div class="book-price">$3.99</div>
+                    <div class="book-card-buttons">
+                        <a href="https://wisdomshelves.gumroad.com/l/xrcfiei" class="buy-button gumroad-button" data-gumroad-single data-gumroad-overlay target="_blank">Buy Now</a>
+                        <a href="#" class="cart-button">Add to Cart</a>
+                        <a href="healing-your-inner-child-description.html" class="desc-button">Book Description</a>
+                    </div>
+                </div>
+                
+                <div class="book-card" style="position:relative;">
+                    <span class="bundle-badge">25% OFF · Limited Time Offer</span>
+                    <div class="book-cover">
+                        <img src="BUndle of both book.png" alt="Complete Life Transformation Bundle Book Cover" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <span class="digital-download-badge">Digital Download</span>
+                    <h3 class="book-title">Bundle: Complete Life Transformation Bundle</h3>
+                    <p class="book-description">Get Both Life-Changing Guides in One Powerful Bundle — Save 25% Instantly.</p>
+                    <div class="book-price">$5.99</div>
+                    <div class="book-card-buttons">
+                        <a href="https://wisdomshelves.gumroad.com/l/ltepa" class="buy-button gumroad-button" data-gumroad-single data-gumroad-overlay target="_blank">Buy Now</a>
+                        <a href="#" class="cart-button">Add to Cart</a>
+                        <a href="bundle-description.html" class="desc-button">Book Description</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Readers Are Saying</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p class="testimonial-text">Every chapter builds on your self-belief. I found myself walking taller and thinking clearer after just a few chapters.</p>
+                    <p class="testimonial-author">- Sarah M.</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-text">This book didn't just motivate me—it gave me tools. I started applying the techniques on day one and I already feel more in control of my thoughts.</p>
+                    <p class="testimonial-author">- James R.</p>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-text">I didn’t expect such deep insights packed into a short book. Every page had a gem that made me pause and reflect. This is now part of my morning mindset ritua!</p>
+                    <p class="testimonial-author">- Emily K.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>Quick Links</h3>
+                    <p><a href="#books">Books</a></p>
+                    <p><a href="#about">About</a></p>
+                    <p><a href="contact.html">Contact</a></p>
+                </div>
+                
+                <div>
+                    <h3>Get Updates</h3>
+                    <p>Subscribe to my newsletter for the latest releases and exclusive content.</p>
+                    <form action="https://formspree.io/f/xrbkwqoe" method="POST" class="newsletter-form" id="newsletterForm" style="margin-top: 15px; display: flex; gap: 10px; align-items: center; justify-content: center;">
+                        <input type="email" name="email" placeholder="Your email address" required style="padding: 12px; border-radius: 25px; border: 1px solid #c3cfe2; font-size: 1rem; font-family: inherit; outline: none; min-width: 0; flex: 1 1 0;">
+                        <button type="submit" class="cta-button" style="margin-top: 0; font-size: 1rem; padding: 12px 25px;">Subscribe</button>
+                    </form>
+                    <div id="newsletterThankYou" style="display:none; color:#20c997; font-weight:600; margin-top:15px; text-align:center;">Thank you! You’ve subscribed to the newsletter.</div>
+                </div>
+                
+                <div>
+                    <h3>Contact Info</h3>
+                    <p>Email: myarts708@gmail.com</p>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="#">📘</a>
+                <a href="#">🐦</a>
+                <a href="#">📷</a>
+                <a href="#">💼</a>
+            </div>
+            
+            <p style="margin-top: 30px; color: #7f8c8d;">© 2025 All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://gumroad.com/js/gumroad-embed.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all book cards and testimonials
+        document.querySelectorAll('.book-card, .testimonial').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Add interactive hover effects to buttons
+        document.querySelectorAll('.buy-button, .cta-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add to Cart button functionality
+        document.querySelectorAll('.cart-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Book added to cart!');
+            });
+        });
+
+        // Book Description button functionality
+        document.querySelectorAll('.desc-button').forEach(button => {
+            // Only attach alert if data-desc attribute exists
+            if (button.hasAttribute('data-desc')) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert(this.getAttribute('data-desc'));
+                });
+            }
+        });
+
+        // Newsletter form AJAX submission
+        const newsletterForm = document.getElementById('newsletterForm');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(newsletterForm);
+                fetch(newsletterForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                }).then(response => {
+                    newsletterForm.style.display = 'none';
+                    document.getElementById('newsletterThankYou').style.display = 'block';
+                }).catch(error => {
+                    newsletterForm.style.display = 'none';
+                    document.getElementById('newsletterThankYou').textContent = 'Oops! Something went wrong. Please try again.';
+                    document.getElementById('newsletterThankYou').style.display = 'block';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
